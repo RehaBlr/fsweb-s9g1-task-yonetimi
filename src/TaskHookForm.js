@@ -3,6 +3,7 @@ import { nanoid } from "nanoid";
 
 import { useForm } from "react-hook-form";
 
+import { toast } from "react-toastify";
 const TaskForm = ({ kisiler, submitFn }) => {
   const {
     register,
@@ -20,6 +21,7 @@ const TaskForm = ({ kisiler, submitFn }) => {
       status: "yapılacak",
     });
     reset();
+    toast.info(`${data.title} Eklendi!`);
   }
 
   return (
