@@ -3,23 +3,13 @@ import { nanoid } from "nanoid";
 
 import { useForm } from "react-hook-form";
 
-
 const TaskForm = ({ kisiler, submitFn }) => {
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors ,isValid},
-  } = useForm({mode : "onChange"});
-
-
-
-  // const [buttonDisabled, setButtonDisabled] = useState(true);
-
-  // form datası her güncellendiğinde valid mi diye kontrol et
-  // useEffect(() => {
-  //   formSemasi.isValid(formData).then((valid) => setButtonDisabled(!valid));
-  // }, [formData]);
+    formState: { errors, isValid },
+  } = useForm({ mode: "onChange" });
 
   // task ekleme
   function myCustomHandleSubmit(data) {
@@ -41,14 +31,16 @@ const TaskForm = ({ kisiler, submitFn }) => {
         <input
           className="input-text"
           id="title"
-          {...register("title"),{required: "Task başlığı yazmalısınız", minLength:{
-            value:3,
-            message:"Task başlığı en az 3 karakter olmalı",
-          } }}
+          {...register("title", {
+            required: "Task başlığı yazmalısınız",
+            minLength: {
+              value: 3,
+              message: "Task başlığı en az 3 karakter olmalı",
+            },
+          })}
           type="text"
         />
-        {errors.title &&  <p className="input-error">{errors.title?.message}</p>}
-        
+        {errors.title && <p className="input-error">{errors.title?.message}</p>}
       </div>
 
       <div className="form-line">
@@ -59,14 +51,17 @@ const TaskForm = ({ kisiler, submitFn }) => {
           className="input-textarea"
           rows="3"
           id="description"
-          {...register("description"),{
-            required: "Task açıklaması yazmalısınız", minLength:{
-            value:10,
-            message:"Task açıklaması en az 10 karakter olmalı",
-          }
-        }}
+          {...register("description", {
+            required: "Task açıklaması yazmalısınız",
+            minLength: {
+              value: 10,
+              message: "Task açıklaması en az 10 karakter olmalı",
+            },
+          })}
         ></textarea>
-        {errors.description &&  <p className="input-error">{errors.description?.message}</p>}
+        {errors.description && (
+          <p className="input-error">{errors.description?.message}</p>
+        )}
       </div>
 
       <div className="form-line">
@@ -74,22 +69,26 @@ const TaskForm = ({ kisiler, submitFn }) => {
         <div>
           {kisiler.map((p) => (
             <label className="input-checkbox" key={p}>
-              <input type="checkbox" {...register("people"),{required:"Lütfen en az bir kişi seçin",
-            validate : (peoList) => peoList.length <= 3 || "En Fazla 3 kişi seçebilirsiniz",
-            }} value={p} />
+              <input
+                type="checkbox"
+                {...register("people", {
+                  required: "Lütfen en az bir kişi seçin",
+                  validate: (peoList) =>
+                    peoList.length <= 3 || "En Fazla 3 kişi seçebilirsiniz",
+                })}
+                value={p}
+              />
               {p}
             </label>
           ))}
         </div>
-        {errors.people &&  <p className="input-error">{errors.people?.message}</p>}
+        {errors.people && (
+          <p className="input-error">{errors.people?.message}</p>
+        )}
       </div>
 
       <div className="form-line">
-        <button
-          className="submit-button"
-          type="submit"
-          disabled={!isValid}
-        >
+        <button className="submit-button" type="submit" disabled={!isValid}>
           Kaydet
         </button>
       </div>
